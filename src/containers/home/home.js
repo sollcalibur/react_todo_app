@@ -1,5 +1,6 @@
 import React from "react";
 import "./home.css";
+import { Link, NavLink } from "react-router-dom";
 
 class Home extends React.Component {
 
@@ -26,7 +27,6 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        console.log("component mounted")
     }
 
     componentDidUpdate(prevState) {
@@ -70,12 +70,17 @@ class Home extends React.Component {
     render() {
         return (
             <div>
+                <br />
+                {/* NavLink allows styling of router-router link */}
+                <NavLink to="/">Home &nbsp;</NavLink >
+                <NavLink to="/about">About &nbsp;</NavLink >
+                <br />
                 <h3>
                     {this.state.homeData}
                 </h3>
-                <br />
+
                 <form onSubmit={this.handleSubmit}>
-                    <label>Todo:</label>&nbsp;
+                    <label>Todo: &nbsp;</label>
                     <input type="text" id="todoInput" name="todoInput" onChange={this.onChangeInput} value={this.state.todoInput} />&nbsp;
                     <input type="submit" value="Add" disabled={this.state.todoInput === ""} />
                 </form>
@@ -89,14 +94,13 @@ class Home extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-
                         {this.state.todoItems.map((todoItem, index) => (
                             <tr key={index}>
                                 <td>{todoItem.id}</td>
                                 <td>{todoItem.todo}</td>
                                 <td>
-                                    {/* <button className="button">+</button> */}
-                                    <button className="button" value={todoItem.id} onClick={this.onClickDelete} disabled={this.state.todoItems.length === 1}>-</button>
+                                    <Link to={"/viewtodo/" + todoItem.id}><button className="button">Details</button></Link>
+                                    <button className="button" title="Delete" value={todoItem.id} onClick={this.onClickDelete} disabled={this.state.todoItems.length === 1}>Delete</button>
                                 </td>
                             </tr>
                         ))}
